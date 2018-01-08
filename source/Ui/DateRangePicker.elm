@@ -35,19 +35,19 @@ update msg model =
                 ( updatedModel, effect ) =
                     Ui.DatePicker.update calendarMsg model.datePicker1
             in
-                ( { model | datePicker1 = updatedModel }, Cmd (Calendar1 effect) )
+                ( { model | datePicker1 = updatedModel }, Cmd.map Calendar1 effect )
 
         Calendar2 calendarMsg ->
             let
                 ( updatedModel, effect ) =
-                    Ui.DatePicker.update calendarMsg model.datePicker1
+                    Ui.DatePicker.update calendarMsg model.datePicker2
             in
-                ( { model | datePicker2 = updatedModel }, Cmd (Calendar2 effect) )
+                ( { model | datePicker2 = updatedModel }, Cmd.map Calendar2 effect )
 
 
-view : String -> Model -> Html Ui.DatePicker.Msg
+view : String -> Model -> Html Msg
 view locale model =
     div []
-        [ Ui.DatePicker.view locale model.datePicker1
-        , Ui.DatePicker.view locale model.datePicker2
+        [ Html.map Calendar1 (Ui.DatePicker.view locale model.datePicker1)
+        , Html.map Calendar2 (Ui.DatePicker.view locale model.datePicker2)
         ]
