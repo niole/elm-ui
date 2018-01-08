@@ -12,6 +12,7 @@ import Ui.DateRangePicker
 import Ui.DatePicker
 import Ui.Calendar exposing (..)
 import Html exposing (..)
+import Html.Attributes exposing (class)
 import Ui.Helpers.Dropdown as Dropdown exposing (Dropdown)
 
 
@@ -108,13 +109,21 @@ update msg_ model =
                 ( { model | readOnly = updatedModel }, Cmd.none )
 
 
+uiSnapshot : String -> String -> Html Msg -> Html Msg
+uiSnapshot title key ui =
+    div [ class key ]
+        [ text title
+        , ui
+        ]
+
+
 view : Model -> Html.Html Msg
 view model =
     div []
-        [ Html.map Simple (Ui.DateRangePicker.view "en_us" model.simple)
-        , Html.map OneDisabled (Ui.DateRangePicker.view "en_us" model.oneDisabled)
-        , Html.map WithPreselectedDates (Ui.DateRangePicker.view "en_us" model.withPreselectedDates)
-        , Html.map ReadOnly (Ui.DateRangePicker.view "en_us" model.readOnly)
+        [ uiSnapshot "Without Presets" "without-presets" (Html.map Simple (Ui.DateRangePicker.view "en_us" model.simple))
+        , uiSnapshot "With One Disabled Date Picker" "one-disabled" (Html.map OneDisabled (Ui.DateRangePicker.view "en_us" model.oneDisabled))
+        , uiSnapshot "With Preselected Dates" "preselected" (Html.map WithPreselectedDates (Ui.DateRangePicker.view "en_us" model.withPreselectedDates))
+        , uiSnapshot "With A Readonly Date Picker" "readonly" (Html.map ReadOnly (Ui.DateRangePicker.view "en_us" model.readOnly))
         ]
 
 
