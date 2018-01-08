@@ -3,7 +3,6 @@ module Ui.DateRangePicker exposing (..)
 import Html exposing (..)
 import Time
 import Ui.DatePicker
-import Ui.Helpers.Picker as Picker
 import Ui.Calendar
 
 
